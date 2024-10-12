@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRampCTFGetFlag } from './hooks';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
     });
   }, []);
 
-  useMemo(() => {
+  useEffect(() => {
     if (getFlagStateValue) {
       handleSetFlagWithTypewriterEffect(getFlagStateValue);
     }
