@@ -13,7 +13,7 @@ function App() {
     flag.split("").forEach((char, index) => {
       const timeout = setTimeout(() => {
         setFlag(prev => [...(prev ?? []), char]);
-      }, index * 500);
+      }, (index + 1) * 500);
 
       newTimeouts.push(timeout);
     });
