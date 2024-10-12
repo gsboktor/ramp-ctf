@@ -2,9 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { useRampCTFGetFlag } from './hooks';
 
 function App() {
+  const [flag, setFlag] = useState("");
+
   const getFlagState = useRampCTFGetFlag();
 
-  const [flag, setFlag] = useState("");
 
   const handleSetFlagWithTypewriterEffect = useCallback((flag: string) => {
     flag.split("").forEach((_, index) => {
