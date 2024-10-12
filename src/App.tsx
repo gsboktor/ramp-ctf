@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useRampCTFGetFlag } from './hooks';
 
 function App() {
-  const [flag, setFlag] = useState("");
+  const [flag, setFlag] = useState<string[]>();
 
   const getFlagState = useRampCTFGetFlag();
 
@@ -10,8 +10,8 @@ function App() {
   const handleSetFlagWithTypewriterEffect = useCallback((flag: string) => {
     flag.split("").forEach((_, index) => {
       setTimeout(() => {
-        setFlag(flag.substring(0, index+1));
-      }, index * 175);
+        setFlag(prev => [...(prev ?? []), flag[index]]);
+      }, index * 500);
     });
   }, []);
 
@@ -25,7 +25,13 @@ function App() {
 
   return (
     <div style={{ backgroundColor: "lightgray", position: "absolute", width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-      {getFlagState.loading ? <p>Loading...</p> : <p>{flag}</p>}
+      {getFlagState.loading ? (<p>Loading...</p>) :
+        (<div style={{ display: "flex", flexDirection: "row" }}>
+          {flag?.map((char, index) => (
+            <p key={index}>{char}</p>
+          ))}
+        </div>)
+      }
     </div>
   );
 }
