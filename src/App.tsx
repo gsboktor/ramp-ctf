@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useCallback, useEffect, useState } from 'react';
+import { useRampCTFGetFlag } from './hooks';
 
 function App() {
+  const getFlagState = useRampCTFGetFlag();
+
+  const [flag, setFlag] = useState("");
+
+  const handleSetFlagWithTypewriterEffect = useCallback((flag: string) => {
+    flag.split("").forEach((_, index) => {
+      setTimeout(() => {
+        setFlag(flag.substring(0, index+1));
+      }, index * 175);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (getFlagState.value) {
+      handleSetFlagWithTypewriterEffect(getFlagState.value);
+    }
+  }, [getFlagState.value, handleSetFlagWithTypewriterEffect]);
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ backgroundColor: "lightgray", position: "absolute", width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      {getFlagState.loading ? <p>Loading...</p> : <p>{flag}</p>}
     </div>
   );
 }
