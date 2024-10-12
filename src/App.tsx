@@ -4,7 +4,7 @@ import { useRampCTFGetFlag } from './hooks';
 function App() {
   const [flag, setFlag] = useState<string[]>();
 
-  const getFlagState = useRampCTFGetFlag();
+  const {value: getFlagStateValue, loading: getFlagStateLoading} = useRampCTFGetFlag();
 
 
   const handleSetFlagWithTypewriterEffect = useCallback((flag: string) => {
@@ -16,16 +16,16 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (getFlagState.value) {
-      handleSetFlagWithTypewriterEffect(getFlagState.value);
+    if (getFlagStateValue) {
+      handleSetFlagWithTypewriterEffect(getFlagStateValue);
     }
-  }, [getFlagState.value, handleSetFlagWithTypewriterEffect]);
+  }, [getFlagStateValue, handleSetFlagWithTypewriterEffect]);
 
 
 
   return (
     <div style={{ backgroundColor: "lightgray", position: "absolute", width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-      {getFlagState.loading ? (<p>Loading...</p>) :
+      {getFlagStateLoading ? (<p>Loading...</p>) :
         (<div style={{ display: "flex", flexDirection: "row" }}>
           {flag?.map((char, index) => (
             <p key={index}>{char}</p>
