@@ -14,3 +14,5 @@ export const createRampCTFClient = (): RampCTFClient => {
         getFlag: getFlag
     }
 }
+
+export const rampCTFClient = createRampCTFClient();
