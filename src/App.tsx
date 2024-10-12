@@ -8,9 +8,9 @@ function App() {
 
 
   const handleSetFlagWithTypewriterEffect = useCallback((flag: string) => {
-    flag.split("").forEach((_, index) => {
+    flag.split("").forEach((char, index) => {
       setTimeout(() => {
-        setFlag(prev => [...(prev ?? []), flag[index]]);
+        setFlag(prev => [...(prev ?? []), char]);
       }, index * 500);
     });
   }, []);
